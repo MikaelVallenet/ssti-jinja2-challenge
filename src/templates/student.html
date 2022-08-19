@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Challenge infosec - 1</title>
+        <script src="static/js/matrix.js"></script>
+        <script src="static/js/effect.js"></script>
+        <link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet">
+    </head>
+    <body onload="init();encode();" style="margin: 0; padding: 0; background-color:#000000;">
+    <!--
+    Jinja is fast like a ninja but sometimes not careful enough about what he is being fed.
+    -->
+    <canvas id="canvas" width="1280" height="720" style="display:block;margin:0 auto;">
+    </canvas>
+    <div id="options" style="position: absolute; right: 31%; bottom: 50%; background-color: rgba(0, 0, 0, 0.8); font-family: monospace;">
+        <div class="container" onload="" style="color: darkred; font-size: 24px; font-weight: bold">
+                <h4 class="text">TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc</h4>
+        </div>
+        <form action = "http://localhost:5000/result" method = "POST">
+           <p style="display:flex;justify-content: center;"><input type ="text" name="payload" size="50"/></p>
+           <p style="display:flex;justify-content: center;"><input type="submit" value="Envoyer le payload" size="50"/></p>
+        </form>
+    </div>
+    </body>
+    <script>
+        let original = 'TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc'
+        let base64 = 'Essaye de me hacker si tu le peux :\'). ~ MI1337'
+
+        let isRunning = false
+        const encode = (e) => {
+            if(isRunning) {
+                return
+            }
+            isRunning = true
+            const el = document.querySelector('.text')
+            animatext(el.textContent, base64, 50, 3000, function(result) {
+                el.textContent = result.text
+                if(result.done) {
+                    isRunning = false
+                }
+            })
+        }
+    </script>
+</html>
